@@ -5,4 +5,4 @@ Filters and Recipe list page
 # Cart
 Cart and checkout page
 # Commmon
-Common page elements such as HTML header or footer
+Common elements such as HTML header or footer
