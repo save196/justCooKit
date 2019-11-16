@@ -1,4 +1,7 @@
 extends ../commmon/layout.pug
 
 block content
-    recipes[0].totalHits
+    each recipe in recipes.results
+        include recipe.pug
+    else
+        li There are no values
