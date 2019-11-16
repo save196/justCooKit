@@ -15,6 +15,7 @@ const options = {
       "specialDiet": "2"
     }
   },
+  json: true,
   headers: {
     'accept': 'application/json',
     'content-type': 'application/json',
@@ -23,11 +24,10 @@ const options = {
 };
 
 function callback(err, res, body) {
-  // let json = JSON.parse(body);
+  let json = JSON.parse(body);
 
   if (!err && res.statusCode == 200) {
-    console.log(body);
-    // console.log(JSON.stringify(json, null, 4));
+    console.log(JSON.stringify(json, null, 4));
   } else {
     console.error(err)
   }
