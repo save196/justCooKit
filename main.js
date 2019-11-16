@@ -19,7 +19,7 @@ async function main() {
   console.log(JSON.stringify(products, null, 4))
   
   let price
-  for(var i = 0; i < products.length/4; i++) {
+  for(var i = 0; i < products.length; i++) {
     price = await getPriceFromIngredient(products[i])
     console.log(price);
   }
