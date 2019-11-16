@@ -7,7 +7,7 @@
 // var session = require('express-session');
 
 const getRecipes = require('./getRecipe')
-// const getProducts = require('./getProducts')
+const getProducts = require('./getProducts')
 
 const recipesURL = 'https://kesko.azure-api.net/v1/search/recipes'
 const body = {
@@ -45,13 +45,16 @@ const body = {
 
 async function main() {
   recipes = await getRecipes(recipesURL, body)
-  // Saverio here has to send me the selected recipe
+  // Saverio here has to send me the selected recipe and how many people want it
   // Then I can filter the recipe and get the list of products with the quantity required
+  let recipe = recipes.results[0]
+  let portions = 4
+  products = getProducts(receipe, portions)
   // Then I pass every product, one by one, to Gabri who calculates the price of each product
   // Then we show the cost of the recipe to the customer
-  // products = getProducts(recipes)
 
-  console.log(JSON.stringify(recipes, null, 4))
+  // console.log(JSON.stringify(recipes.results[0].Ingredients[0].SubSectionIngredients, null, 4))
+  console.log(JSON.stringify(products, null, 4))
 }
 
 main()
