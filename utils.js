@@ -3,8 +3,8 @@ const getStoresFromEan = require('./apiModules/getStoresFromEan');
 const getPriceFromEanAndStore = require('./apiModules/getPriceFromEanAndStore');
 
 module.exports = {
-  getProducts: function (recipe, requiredPortions) {
-    let products = []
+  getIngredients: function (recipe, requiredPortions) {
+    let ingredients = []
     let portions = recipe.Portions ? eval(recipe.Portions.Amount) : 1
 
     Array.isArray(recipe.Ingredients) ? recipe.Ingredients.forEach(ingredient => {
@@ -36,10 +36,10 @@ module.exports = {
         }
         amount = amount ? amount : 0
 
-        let index = products.findIndex(x => x.name === name)
+        let index = ingredients.findIndex(x => x.name === name)
 
         if (index === -1) {
-          products.push({
+          ingredients.push({
             name,
             ean: ean ? ean : null,
             amount: Math.round(amount),
@@ -47,12 +47,12 @@ module.exports = {
           })
         }
         else {
-          products[index].amount = Math.round(amount + products[index].amount)
+          ingredients[index].amount = Math.round(amount + ingredients[index].amount)
         }
       }) : console.log('No sub-ingredients')
     }) : console.log("No ingredients")
 
-    return products
+    return ingredients
   },
 
   getPriceFromIngredient: async function (ingredient) {
