@@ -8,8 +8,6 @@ require('dotenv').config()
 // }
 
 module.exports = function getPricesFromEanAndStores(ean, stores) {
-  console.log(stores);
-  
   let store = Array.isArray(stores) && stores.length ? stores[0].id : -1
   
   const options = {
