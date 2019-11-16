@@ -7,7 +7,9 @@ require('dotenv').config()
 //   throw new Error('AZURE_SUBSCRIPTION_KEY is not set.')
 // }
 
-module.exports = function getPricesFromEanAndStores(ean, store) {
+module.exports = function getPricesFromEanAndStores(ean, stores) {
+  let store = Array.isArray(stores)? stores[0].id : -1
+  
   const options = {
     url: 'https://kesko.azure-api.net/v2/stores/'+ store +'/product-pricing?plussa=False',
     method: 'POST',
@@ -25,7 +27,6 @@ module.exports = function getPricesFromEanAndStores(ean, store) {
   return new Promise(function (resolve, reject) {
     request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        //ret_val = JSON.parse(body);
         resolve(body[ean].simplePrice.price);
       } else {
         reject(error)

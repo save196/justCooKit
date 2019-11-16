@@ -22,21 +22,3 @@ app.listen(3000, () => {
     console.log('Listening on port 3000!');
 })
 module.exports = app;
-
-
-
-
-
-
-// async function main() {
-//   recipes = await getRecipes(recipesURL, body)
-//   // Saverio here has to send me the selected recipe
-//   // Then I can filter the recipe and get the list of products with the quantity required
-//   // Then I pass every product, one by one, to Gabri who calculates the price of each product
-//   // Then we show the cost of the recipe to the customer
-//   // products = getProducts(recipes)
-
-//   console.log(JSON.stringify(recipes, null, 4))
-// }
-
-// main()

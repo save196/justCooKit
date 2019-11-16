@@ -40,7 +40,7 @@ module.exports = function getPriceFromIngredient(ingredient) {
   }
   else {
     body = {
-      "query": ingredient['IngredientTypeName'],
+      "query": ingredient['ingredientTypeName'],
       "view": {
         "limit": 1
       }
@@ -62,7 +62,6 @@ module.exports = function getPriceFromIngredient(ingredient) {
   return new Promise(function (resolve, reject) {
     request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        console.log(body);
         resolve(body['results'][0]['ean']);
       } else {
         reject(error)

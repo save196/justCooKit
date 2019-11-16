@@ -5,7 +5,7 @@ var path = require('path');
 var fs = require('fs');
 const Router = require('express-promise-router')
 
-const getRecipes = require('../getRecipes')
+const getRecipes = require('../apiModules/getRecipes')
 
 const recipesURL = 'https://kesko.azure-api.net/v1/search/recipes'
 const body = {
