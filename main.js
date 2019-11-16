@@ -1,7 +1,7 @@
 const getRecipes = require('./apiModules/getRecipes')
 const { getIngredients, getPriceFromIngredient } = require('./utils')
 
-recipesURL = process.env.AZURE_API_URL
+recipesURL = process.env.RECIPES_API_URL
 
 async function main() {
   let limit = 1
