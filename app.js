@@ -9,20 +9,6 @@
 const getRecipes = require('./getRecipe')
 const getProducts = require('./getProducts')
 
-const recipesURL = 'https://kesko.azure-api.net/v1/search/recipes'
-const body = {
-  "filters": {
-    "specialDiet": "2",
-    "preparationTime": {
-      "minTime": 30,
-      "maxTime": 60
-    }
-  },
-  "view": {
-    "limit": 1
-  }
-}
-
 // let app = express();
 // app.use(bodyParser.json()); // support json encoded bodies
 // app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -44,12 +30,13 @@ const body = {
 // module.exports = app;
 
 async function main() {
-  recipes = await getRecipes(recipesURL, body)
+  let limit = 1
+  recipes = await getRecipes(limit)
   // Saverio here has to send me the selected recipe and how many people want it
   // Then I can filter the recipe and get the list of products with the quantity required
   let recipe = recipes.results[0]
   let portions = 4
-  products = getProducts(receipe, portions)
+  products = getProducts(recipe, portions)
   // Then I pass every product, one by one, to Gabri who calculates the price of each product
   // Then we show the cost of the recipe to the customer
 
