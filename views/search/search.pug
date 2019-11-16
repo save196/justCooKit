@@ -1,6 +1,8 @@
 extends ../common/layout
 
 block content
+    include filters.pug
+    br
     each recipe in recipes.results
         include recipe.pug
     else

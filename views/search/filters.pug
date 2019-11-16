@@ -1,0 +1,18 @@
+form(action="/check" method="POST")
+    input.form-control(type="number" name="maxTime")
+    |
+    input.form-control(type="checkbox", value="4", name="specialDiet")
+    | Gluten Free
+    input.form-control(type="checkbox", value="7", name="specialDiet") 
+    | Eggless
+    input.form-control(type="checkbox", value="6", name="specialDiet") 
+    | Vegetarian
+    input.form-control(type="checkbox", value="2", name="specialDiet") 
+    | Lactose Free
+    input.form-control(type="checkbox", value="3", name="specialDiet") 
+    | Milk Free
+    input.form-control(type="checkbox", value="5", name="specialDiet") 
+    | Sugar Free
+    input.form-control(type="checkbox", value="1", name="specialDiet") 
+    | Low lactose
+    button.btn.btn-primary(type='submit') Sign up

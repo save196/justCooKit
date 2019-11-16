@@ -31,7 +31,7 @@ router.get("/search", async (req, res) => {
 
 
 router.post("/check", function(req,res){
-  console.log(req.body.retRecipe)
+  console.log(req.body.specialDiet)
   res.send({ status: 'SUCCESS' });
 });
 
