@@ -1,5 +1,8 @@
 const request = require('request');
 
+const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
+const API_URL = process.env.PRODUCTS_API_U
+
 /* INGREDIENT
 {
   "Name": "(luomu) karitsan jauhelihaa",
@@ -41,14 +44,14 @@ module.exports = function getPriceFromIngredient(ingredient) {
   };
 
   let options = {
-    url: 'https://kesko.azure-api.net/v1/search/products',
+    url: API_URL,
     method: 'POST',
     body,
     json: true,
     headers: {
       'accept': 'application/json',
       'content-type': 'application/json',
-      'Ocp-Apim-Subscription-Key': '17776f56f1314e37b9f5a0194e05ba1a'
+      'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY
     }
   };
 

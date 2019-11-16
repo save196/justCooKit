@@ -1,6 +1,9 @@
 const request = require('request');
 require('dotenv').config()
 
+const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
+const API_URL = process.env.PRODUCTS_BY_EAN_API_U
+
 // const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
 // if (!SUBSCRIPTION_KEY) {
 //   const secret = process.env.SECRET;
@@ -9,12 +12,12 @@ require('dotenv').config()
 
 module.exports = function getStoresFromEan(ean) {
   const options = {
-    url: 'https://kesko.azure-api.net/v2/products?ean=' + ean,
+    url: API_URL + ean,
     method: 'GET',
     headers: {
       'accept': 'application/json',
       'content-type': 'application/json',
-      'Ocp-Apim-Subscription-Key': '17776f56f1314e37b9f5a0194e05ba1a'
+      'Ocp-Apim-Subscription-Key': SUBSCRIPTION_KEY
     }
   };
 

@@ -1,6 +1,8 @@
 const request = require('request');
 require('dotenv').config()
 
+const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
+
 // const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
 // if (!SUBSCRIPTION_KEY) {
 //   const secret = process.env.SECRET;
