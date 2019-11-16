@@ -1,36 +1,24 @@
-const request = require('request');
-require('dotenv').config()
-
-// const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
-// if (!SUBSCRIPTION_KEY) {
-//   const secret = process.env.SECRET;
-//   throw new Error('AZURE_SUBSCRIPTION_KEY is not set.')
-// }
-
-const options = {
-  url: 'https://kesko.azure-api.net/v1/search/recipes',
-  method: 'POST',
-  body: {
-    "filters": {
-      "specialDiet": "2"
+const getReceipts = require('./getReceipts')
+const url = 'https://kesko.azure-api.net/v1/search/recipes'
+const body = {
+  "filters": {
+    "specialDiet": "2",
+    "preparationTime": {
+      "minTime": 30,
+      "maxTime": 60
     }
   },
-  json: true,
-  headers: {
-    'accept': 'application/json',
-    'content-type': 'application/json',
-    'Ocp-Apim-Subscription-Key': '17776f56f1314e37b9f5a0194e05ba1a'
-  }
-};
-
-function callback(err, res, body) {
-  let json = JSON.parse(body);
-
-  if (!err && res.statusCode == 200) {
-    console.log(JSON.stringify(json, null, 4));
-  } else {
-    console.error(err)
+  "view": {
+    "limit": 2
   }
 }
 
-request(options, callback);
+receipts = getReceipts(url, body, function (err, body) {
+  if (err) {
+    console.log(err);
+  } else {
+    return body;
+  }
+})
+
+console.log(receipts)
