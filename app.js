@@ -1,5 +1,6 @@
 const getReceipts = require('./getReceipts')
-const url = 'https://kesko.azure-api.net/v1/search/recipes'
+
+const receiptsURL = 'https://kesko.azure-api.net/v1/search/recipes'
 const body = {
   "filters": {
     "specialDiet": "2",
@@ -13,12 +14,9 @@ const body = {
   }
 }
 
-receipts = getReceipts(url, body, function (err, body) {
-  if (err) {
-    console.log(err);
-  } else {
-    return body;
-  }
-})
+async function main() {
+  receipts = await getReceipts(receiptsURL, body)
+  console.log(JSON.stringify(receipts, null, 4));
+}
 
-console.log(receipts)
+main()

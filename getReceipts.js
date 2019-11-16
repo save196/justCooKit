@@ -7,7 +7,7 @@ require('dotenv').config()
 //   throw new Error('AZURE_SUBSCRIPTION_KEY is not set.')
 // }
 
-module.exports = function (url, body, callback) {
+module.exports = function getReceipts(url, body) {
   const options = {
     url,
     method: 'POST',
@@ -20,10 +20,13 @@ module.exports = function (url, body, callback) {
     }
   };
 
-  return request(options, function (error, response, body) {
-    if (error || response.statusCode !== 200) {
-      return callback(error || { statusCode: response.statusCode });
-    }
-    callback(null, body);
-  });
+  return new Promise(function (resolve, reject) {
+    request(options, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        resolve(body);
+      } else {
+        reject(error)
+      }
+    });
+  })
 }
