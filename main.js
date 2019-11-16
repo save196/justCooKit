@@ -1,5 +1,5 @@
 const getRecipes = require('./apiModules/getRecipes')
-const {getProducts, getPriceFromIngredient} = require('./utils')
+const { getProducts, getPriceFromIngredient } = require('./utils')
 
 recipesURL = process.env.AZURE_API_URL
 
@@ -8,7 +8,7 @@ async function main() {
   let specialDiet = "2"
   let maxTime = 60
   let requiredPortions = 3
-  recipes = await getRecipes(limit, specialDiet, maxTime)
+  recipes = await getRecipes()
   // Saverio here has to send me the selected recipe
   // Then I can filter the recipe and get the list of products with the quantity required
   // Then I pass every product, one by one, to Gabri who calculates the price of each product
@@ -18,11 +18,8 @@ async function main() {
   // console.log(JSON.stringify(recipes.results[0], null, 4))
   console.log(JSON.stringify(products, null, 4))
 
-
   let price = await getPriceFromIngredient(products[0])
   console.log(price);
-  
-  
 }
 
 main()
