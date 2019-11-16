@@ -1,0 +1,4 @@
+p= recipe.Name + ", " + recipe.Price + ", " +recipe.PictureUrls[0].Normal + ", " + recipe.PreparationTime.Description
+form(action="/check" method="POST")
+    input.form-control(type="hidden" name="retRecipe" value=recipe)
+    button.btn.btn-primary(type='submit') Sign up

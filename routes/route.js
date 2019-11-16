@@ -5,7 +5,7 @@ var path = require('path');
 var fs = require('fs');
 const Router = require('express-promise-router')
 
-const getRecipes = require('../getRecipe')
+const getRecipes = require('../getRecipes')
 
 const recipesURL = 'https://kesko.azure-api.net/v1/search/recipes'
 const body = {
@@ -23,10 +23,18 @@ const body = {
 
 
 router.get("/search", async (req, res) => {
-  const recipesList = await getRecipes(recipesURL, body)
-  res.render("view/search/search.pug", { recipes: recipesList });
+  const recipesList = await getRecipes(10)
+  res.render("views/search/search.pug", { recipes: recipesList });
 
 })
+
+
+
+router.post("/check", function(req,res){
+  console.log(req.body.retRecipe)
+  res.send({ status: 'SUCCESS' });
+});
+
 
 // router.get("/cerco", (req, res) => {
 //   getRecipes(recipesURL, body).then(recipesList => {

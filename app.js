@@ -7,9 +7,9 @@ const pug = require('pug');
 var bodyParser = require('body-parser');
 
 app.set('view engine', 'pug');
-//app.use(bodyParser.json()); // support json encoded bodies
-//app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.set('views', __dirname, '/view');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.set('views', __dirname, '/views');
 
 app.use('/', route);
 app.get('/', function(req,res){
