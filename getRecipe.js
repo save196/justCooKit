@@ -7,7 +7,7 @@ require('dotenv').config()
 //   throw new Error('AZURE_SUBSCRIPTION_KEY is not set.')
 // }
 
-module.exports = function getReceipts(url, body) {
+module.exports = function getRecipes(url, body) {
   const options = {
     url,
     method: 'POST',
