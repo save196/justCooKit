@@ -1,5 +1,5 @@
 const getRecipes = require('./apiModules/getRecipes')
-const getProducts = require('./getProducts')
+const {getProducts, getPriceFromIngredient} = require('./utils')
 
 recipesURL = process.env.AZURE_API_URL
 
@@ -17,6 +17,12 @@ async function main() {
 
   // console.log(JSON.stringify(recipes.results[0], null, 4))
   console.log(JSON.stringify(products, null, 4))
+
+
+  let price = await getPriceFromIngredient(products[0])
+  console.log(price);
+  
+  
 }
 
 main()
