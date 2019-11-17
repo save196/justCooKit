@@ -6,7 +6,7 @@ var fs = require('fs');
 const Router = require('express-promise-router')
 
 const getRecipes = require('../apiModules/getRecipes')
-const { getIngredients, getPriceFromIngredient } = require('../utils')
+const { getIngredients, getRecipePrice, getPriceFromIngredient } = require('../utils')
 
 router.get("/search", async (req, res) => {
   const recipesList = await getRecipes(10)
@@ -18,16 +18,13 @@ router.post("/check", function (req, res) {
   res.send({ status: 'SUCCESS' });
 });
 
-router.post("/recipe", function (req, res) {
-  console.log(req.body)
-  let ingredients = getIngredients(req.body.recipe, 1)
-  let finalPrice = 0
+router.get("/recipe", async function (req, res) {
+  // console.log(req.body)
+  let recipes = await getRecipes(1, "2", 60)
+  let ingredients = getIngredients(recipes[0], 1)
+  let price = await getRecipePrice(ingredients)
 
-  Array.isArray(ingredients) ? ingredients.forEach(ingredient => {
-    finalPrice += await getPriceFromIngredient(ingredient)
-  }) : console.error("No ingredients in the recipe!")
-
-  res.render("views/recipe/recipe.pug", { recipe: req.body.recipe, price: finalPrice });
+  res.render("views/recipe/recipe.pug", { recipe: recipes[0], price });
 });
 
 router.post("/cart", function (req, res) {
