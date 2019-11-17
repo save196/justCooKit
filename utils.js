@@ -61,6 +61,11 @@ module.exports = {
     const { ean, quantity } = await getEanAndQuantityFromIngredient(ingredient);
     let stores = await getStoresFromEan(ean);
     let price = await getPriceFromEanAndStore(ean, stores);
-    return price;
+
+    let weightedPrice = quantity === 0 ? 0 : price * ingredient.amount / quantity
+
+    Number.isNaN(weightedPrice) ? weightedPrice = 0 : Math.abs(weightedPrice)
+
+    return weightedPrice
   }
 }

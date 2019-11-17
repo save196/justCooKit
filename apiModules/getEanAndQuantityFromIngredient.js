@@ -62,9 +62,13 @@ module.exports = function getPriceFromIngredient(ingredient) {
         if (body.results[0]) {
           let ean = body.results[0].ean
           let urlSlug = body.results[0].urlSlug
+
           noEan = urlSlug.slice(0, urlSlug.length - 14)
           firstDigit = noEan.match(/\d/)
-          noFirstPart = noEan.slice(noEan.indexOf(firstDigit), noEan.length)
+          let index = noEan.indexOf(firstDigit)
+          if (index === -1) index = 0
+
+          noFirstPart = noEan.slice(index, noEan.length)
 
           value = ""
           for (let i = 0; i < noFirstPart.length; i++) {
@@ -85,7 +89,7 @@ module.exports = function getPriceFromIngredient(ingredient) {
                 break
               }
               if (char === 'k' && noFirstPart[i + 1] === 'g') {
-                value *= 1000
+                !value ? value = 1000 : value *= 1000
                 break
               }
               if ((char === '-' || char === 'x') && noFirstPart[i + 1].match(/\d/)) {
@@ -110,7 +114,13 @@ module.exports = function getPriceFromIngredient(ingredient) {
             }
           }
 
-          if (!value && value !== 0) value = 1
+          if (!value && value !== 0) {
+            if (urlSlug.includes("kg")) {
+              value = 1000
+            } else {
+              value = 0
+            }
+          }
 
           resolve({ ean, quantity: eval(value) });
         } else {
