@@ -1,10 +1,12 @@
-const getEanFromIngredient = require('./apiModules/getEanFromIngredient');
+const getEanAndQuantityFromIngredient = require('./apiModules/getEanAndQuantityFromIngredient');
 const getStoresFromEan = require('./apiModules/getStoresFromEan');
 const getPriceFromEanAndStore = require('./apiModules/getPriceFromEanAndStore');
 
 module.exports = {
   getIngredients: function (recipe, requiredPortions) {
     let ingredients = []
+    if (!recipe) return ingredients
+
     let portions = recipe.Portions ? eval(recipe.Portions.Amount) : 1
 
     Array.isArray(recipe.Ingredients) ? recipe.Ingredients.forEach(ingredient => {
@@ -56,7 +58,7 @@ module.exports = {
   },
 
   getPriceFromIngredient: async function (ingredient) {
-    const ean = await getEanFromIngredient(ingredient);
+    const { ean, quantity } = await getEanAndQuantityFromIngredient(ingredient);
     let stores = await getStoresFromEan(ean);
     let price = await getPriceFromEanAndStore(ean, stores);
     return price;
