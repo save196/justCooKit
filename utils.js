@@ -76,6 +76,10 @@ module.exports = {
       finalPrice += weightedPrice
     }
 
-    return (finalPrice * 1.2).toFixed(2) + '€'
+    if (finalPrice > 3) {
+      return (finalPrice * 1.5).toFixed(2) + '€'
+    } else {
+      return (finalPrice * 2.5).toFixed(2) + '€'
+    }
   }
 }
