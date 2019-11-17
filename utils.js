@@ -68,6 +68,32 @@ module.exports = {
 
     return ingredients
   },
+  getVanillaIngredients: function (recipe, requiredPortions) {
+    let ingredients = []
+    if (!recipe) return ingredients
+
+    let portions = recipe.Portions ? eval(recipe.Portions.Amount) : 1
+
+    Array.isArray(recipe.Ingredients) ? recipe.Ingredients.forEach(ingredient => {
+      Array.isArray(ingredient.SubSectionIngredients) ? ingredient.SubSectionIngredients.forEach(subSectionIngredient => {
+        let name = subSectionIngredient[0].Name
+        let ean = subSectionIngredient[0].Ean
+        let ingredientTypeName = subSectionIngredient[0].IngredientTypeName
+        let amount
+
+        if (subSectionIngredient[0] && subSectionIngredient[0].Amount) {
+          ingredients.push({
+            name,
+            ean: ean ? ean : null,
+            amount: subSectionIngredient[0].Amount,
+            ingredientTypeName
+          })
+        }
+      }) : console.log('No sub-ingredients')
+    }) : console.log("No ingredients")
+
+    return ingredients
+  },
   getRecipePrice: async function (ingredients) {
     let finalPrice = 0
 

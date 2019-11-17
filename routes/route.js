@@ -6,7 +6,7 @@ var fs = require('fs');
 const Router = require('express-promise-router')
 
 const getRecipes = require('../apiModules/getRecipes')
-const { getIngredients, getRecipePrice, getPriceFromIngredient } = require('../utils')
+const { getVanillaIngredients, getRecipePrice, getPriceFromIngredient } = require('../utils')
 
 router.get("/search", async (req, res) => {
   const recipesList = await getRecipes(10)
@@ -21,7 +21,7 @@ router.post("/check", function (req, res) {
 router.get("/recipe", async function (req, res) {
   // console.log(req.body)
   let recipes = await getRecipes(1, "2", 60)
-  let ingredients = getIngredients(recipes[0], 1)
+  let ingredients = getVanillaIngredients(recipes[0], 1)
   let price = await getRecipePrice(ingredients)
 
   res.render("views/recipe/recipe.pug", { recipe: recipes[0], price });
