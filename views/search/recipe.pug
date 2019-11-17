@@ -1,4 +1,26 @@
-p= recipe.Name + ", " + recipe.Price + ", " +recipe.PictureUrls[0].Normal + ", " + recipe.PreparationTime.Description
-form(action="/check" method="POST")
-    input.form-control(type="hidden" name="retRecipe" value=recipe)
-    button.btn.btn-primary(type='submit') Sign up
+//- p= recipe.Name + ", " + recipe.Price + ", " +recipe.PictureUrls[0].Normal + ", " + recipe.PreparationTime.Description
+//- form(action="/check" method="POST")
+//-     input.form-control(type="number" name="requiredPortions" value=1)
+//-     input.form-control(type="hidden" name="recipe" value=recipe)
+//-     button.btn.btn-primary(type='submit') Sign up
+
+
+.card.shadow-sm.mb-5(style="max-width:390px;")
+    img.card-img-top(src=recipe.PictureUrls[0].Normal alt="recipe image")
+    .card-body(style ="padding: 15px 30px; color: black;")
+        .row(style ="padding-bottom: 10px;")
+            .col-xl(style ="padding-right: 0;")
+                span(style ="height: 15px;")= recipe.Name
+            .col-
+
+        .row(style ="padding: 0;")
+            .col-xl(style ="padding-right: 0;")
+                    span.fa.fa-star
+                    span.fa.fa-star
+                    span.fa.fa-star
+                    span.fa.fa-star
+                    span.fa.fa-star
+            .col-
+                    span= recipe.PreparationTime.Description
+
+

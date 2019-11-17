@@ -1,9 +1,14 @@
 extends ../common/layout
 
 block content
-    include filters.pug
     br
-    each recipe in recipes.results
-        include recipe.pug
-    else
-        li There are no values
+    .container(style="max-width: 1540px; margin: auto;")
+        .card-deck(style="margin-left: 120px;")
+            each recipe in recipes.results
+                form(action="/check" method="POST")
+                    button(name="action" value="blue" style="border: 0; margin: 0; background-color: #FAFAFA; text-align: left;")
+                        include recipe.pug
+            else
+                li There are no values
+
+

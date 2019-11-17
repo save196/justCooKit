@@ -1,6 +1,8 @@
 const request = require('request');
 require('dotenv').config()
 
+const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
+
 // const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
 // if (!SUBSCRIPTION_KEY) {
 //   const secret = process.env.SECRET;
@@ -8,10 +10,10 @@ require('dotenv').config()
 // }
 
 module.exports = function getPricesFromEanAndStores(ean, stores) {
-  let store = Array.isArray(stores)? stores[0].id : -1
-  
+  let store = Array.isArray(stores) && stores.length ? stores[0].id : -1
+
   const options = {
-    url: 'https://kesko.azure-api.net/v2/stores/'+ store +'/product-pricing?plussa=False',
+    url: 'https://kesko.azure-api.net/v2/stores/' + store + '/product-pricing?plussa=False',
     method: 'POST',
     body: {
       "eans": ean
@@ -24,13 +26,18 @@ module.exports = function getPricesFromEanAndStores(ean, stores) {
     }
   };
 
-  return new Promise(function (resolve, reject) {
-    request(options, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        resolve(body[ean].simplePrice.price);
-      } else {
-        reject(error)
-      }
-    });
-  })
+  if (store != -1) {
+    return new Promise(function (resolve, reject) {
+      request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          resolve(body[ean].simplePrice.price);
+        } else {
+          reject(error)
+        }
+      });
+    })
+  }
+  else {
+    return 0
+  }
 }

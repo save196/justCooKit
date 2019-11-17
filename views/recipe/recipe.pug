@@ -1,0 +1,32 @@
+extends ../common/layout
+
+block content
+    img.img-fluid(src=recipe.PictureUrls[0].Normal style="width: 100%;")
+    .container
+        .row(style="background-color: #F6F6F6;")
+            p= recipe.PreparationTime.Description
+        .row(style="background-color: #F6F6F6;")
+            h1= recipe.Name
+        .col
+            h2 Ingredints
+            for ing in ingredients
+                .col(style="width: 30px;")
+                    span= ing.amount
+                .col
+                    span= ing.name
+
+        .col
+            .row
+                h2 Instructions
+                span= reipes.Instructions
+            .row
+                h1 Price #{price}
+                form(action="/check" method="POST")
+                    input.form-control(type="number" name="maxTime" value=1)
+                    button.btn.btn-primary(type='submit') Add to basket
+
+
+
+
+
+    p= recipe.Name + ", " + recipe.Price + ", " +recipe.PictureUrls[0].Normal + ", " + recipe.PreparationTime.Description

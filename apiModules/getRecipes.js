@@ -2,22 +2,26 @@ const request = require('request');
 require('dotenv').config()
 
 const SUBSCRIPTION_KEY = process.env.AZURE_SUBSCRIPTION_KEY
-const API_URL = process.env.AZURE_API_URL
+const API_URL = process.env.RECIPES_API_URL
 
 module.exports = function getRecipes(limit, specialDiet, maxTime) {
+  let defaultLimit = "20"
+  let defaultSpecialDiet = []
+  let defaultMaxTime = 60
+
   const options = {
     url: API_URL,
     method: 'POST',
     body: {
       "filters": {
-        specialDiet,
+        specialDiet: specialDiet ? specialDiet : defaultSpecialDiet,
         "preparationTime": {
           "minTime": 30,
-          maxTime
+          maxTime: maxTime ? maxTime : defaultMaxTime
         }
       },
       "view": {
-        limit
+        limit: limit ? limit : defaultLimit
       }
     },
     json: true,

@@ -10,6 +10,10 @@ app.set('view engine', 'pug');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.set('views', __dirname, '/views');
+app.use(express.static(path.join(__dirname, 'static/fonts')));
+app.use(express.static(path.join(__dirname, 'static/css')));
+app.use(express.static(path.join(__dirname, 'static/images')));
+
 
 app.use('/', route);
 app.get('/', function(req,res){
