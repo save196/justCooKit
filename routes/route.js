@@ -13,28 +13,24 @@ router.get("/search", async (req, res) => {
   res.render("views/search/search.pug", { recipes: recipesList });
 })
 
+router.post("/search", async (req, res) => {
+  const recipesList = await getRecipes(10, req.body.specialDiet, req.body.maxTime)
+  res.render("views/search/search.pug", { recipes: recipesList });
+})
+
 router.post("/check", function (req, res) {
   console.log(req.body.retRecipe)
   res.send({ status: 'SUCCESS' });
 });
 
-router.get("/recipe", async function (req, res) {
+router.post("/recipe", async function (req, res) {
   // console.log(req.body)
-  let recipes = await getRecipes(1, "2", 60)
-  let ingredients = getIngredients(recipes.results[0], 1)
-  let vanillaIngredients = getVanillaIngredients(recipes.results[0], 1)
+  let recipe = req.body.retRecipe
+  let ingredients = getIngredients(recipe, 1)
+  let vanillaIngredients = getVanillaIngredients(recipe, 1)
   let price = await getRecipePrice(ingredients)
 
-  res.render("views/recipe/recipe.pug", { recipe: recipes.results[0], ingredients: vanillaIngredients, price });
-});
-
-router.post("/cart", function (req, res) {
-  console.log(req.body)
-  Array.isArray(req.body.recipes) ? req.body.recipes.forEach(recipe => {
-    // da fare
-  }) : console.error("No recipes in the cart!")
-
-  res.render("views/recipe/recipe.pug", { recipe: req.body.recipe, price: finalPrice });
+  res.render("views/recipe/recipe.pug", { recipe: recipe, ingredients: vanillaIngredients, price });
 });
 
 module.exports = router;
