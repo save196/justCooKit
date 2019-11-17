@@ -2,6 +2,18 @@ const getEanAndQuantityFromIngredient = require('./apiModules/getEanAndQuantityF
 const getStoresFromEan = require('./apiModules/getStoresFromEan');
 const getPriceFromEanAndStore = require('./apiModules/getPriceFromEanAndStore');
 
+async function getPriceFromIngredient(ingredient) {
+  const { ean, quantity } = await getEanAndQuantityFromIngredient(ingredient);
+  let stores = await getStoresFromEan(ean);
+  let price = await getPriceFromEanAndStore(ean, stores);
+
+  let weightedPrice = quantity === 0 ? 0 : price * ingredient.amount / quantity
+
+  Number.isNaN(weightedPrice) ? weightedPrice = 0 : Math.abs(weightedPrice)
+
+  return weightedPrice
+}
+
 module.exports = {
   getIngredients: function (recipe, requiredPortions) {
     let ingredients = []
@@ -56,16 +68,14 @@ module.exports = {
 
     return ingredients
   },
+  getRecipePrice: async function (ingredients) {
+    let finalPrice = 0
 
-  getPriceFromIngredient: async function (ingredient) {
-    const { ean, quantity } = await getEanAndQuantityFromIngredient(ingredient);
-    let stores = await getStoresFromEan(ean);
-    let price = await getPriceFromEanAndStore(ean, stores);
+    for (let i = 0; i < ingredients.length; i++) {
+      weightedPrice = await getPriceFromIngredient(ingredients[i])
+      finalPrice += weightedPrice
+    }
 
-    let weightedPrice = quantity === 0 ? 0 : price * ingredient.amount / quantity
-
-    Number.isNaN(weightedPrice) ? weightedPrice = 0 : Math.abs(weightedPrice)
-
-    return weightedPrice
+    return (finalPrice * 1.2).toFixed(2) + '€'
   }
 }

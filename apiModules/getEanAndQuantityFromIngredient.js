@@ -26,7 +26,7 @@ OR
 }
 */
 
-module.exports = function getPriceFromIngredient(ingredient) {
+module.exports = function getEanAndQuantityFromIngredient(ingredient) {
   if ('Ean' in ingredient) {
     body = {
       "filters": {
