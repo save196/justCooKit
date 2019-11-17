@@ -14,22 +14,18 @@ router.get("/search", async (req, res) => {
 })
 
 router.post("/search", async (req, res) => {
-  const recipesList = await getRecipes(10, req.body.specialDiet, req.body.maxTime)
+  console.log(eval(req.body.maxTime.match(/\d/g).join("")));
+  const recipesList = await getRecipes(10, req.body.specialDiet, eval(req.body.maxTime.match(/\d/g).join("")))
   res.render("views/search/search.pug", { recipes: recipesList });
 })
 
-router.post("/check", function (req, res) {
-  console.log(req.body.retRecipe)
-  res.send({ status: 'SUCCESS' });
-});
 
 router.post("/recipe", async function (req, res) {
-  // console.log(req.body)
   let recipe = req.body.retRecipe
   let ingredients = getIngredients(recipe, 1)
   let vanillaIngredients = getVanillaIngredients(recipe, 1)
   let price = await getRecipePrice(ingredients)
-
+  console.log(recipe.PictureUrls)
   res.render("views/recipe/recipe.pug", { recipe: recipe, ingredients: vanillaIngredients, price });
 });
 
