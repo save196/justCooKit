@@ -21,11 +21,10 @@ router.post("/search", async (req, res) => {
 
 
 router.post("/recipe", async function (req, res) {
-  let recipe = req.body.retRecipe
+  let recipe = JSON.parse(req.body.retRecipe)
   let ingredients = getIngredients(recipe, 1)
   let vanillaIngredients = getVanillaIngredients(recipe, 1)
   let price = await getRecipePrice(ingredients)
-  console.log(recipe.PictureUrls)
   res.render("views/recipe/recipe.pug", { recipe: recipe, ingredients: vanillaIngredients, price });
 });
 
