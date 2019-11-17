@@ -21,11 +21,11 @@ router.post("/check", function (req, res) {
 router.get("/recipe", async function (req, res) {
   // console.log(req.body)
   let recipes = await getRecipes(1, "2", 60)
-  let ingredients = getIngredients(recipes[0], 1)
-  let vanillaIngredients = getVanillaIngredients(recipes[0], 1)
+  let ingredients = getIngredients(recipes.results[0], 1)
+  let vanillaIngredients = getVanillaIngredients(recipes.results[0], 1)
   let price = await getRecipePrice(ingredients)
 
-  res.render("views/recipe/recipe.pug", { recipe: recipes[0], price });
+  res.render("views/recipe/recipe.pug", { recipe: recipes.results[0], ingredients: vanillaIngredients, price });
 });
 
 router.post("/cart", function (req, res) {
